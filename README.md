@@ -1,9 +1,8 @@
 # FPSAC, Fast Phylogenetic Scaffolding of Ancient Contigs.
-# June 2013. 
-# Contact: Cedric Chauve (Dept. Mathematics, Simon Fraser University), cedric.chauve@sfu.ca
+## June 2013. 
+## Contact: Cedric Chauve (Dept. Mathematics, Simon Fraser University), cedric.chauve@sfu.ca
 
-1. WHAT IS FPSAC?
-=================
+##1. WHAT IS FPSAC?
 
 FPSAC is a suite of shell and python scripts used to scaffold ancient
 contigs, for an ancestral genome of interest, using a phylogenetic
@@ -14,69 +13,67 @@ The methodological principles of FPSAC are described in the paper
 Rajaraman, Eric Tannier and Cedric Chauve, currently in revision for
 Bioinformatics. More details are provided in section 4 below.
 
-2. INSTALLING FPSAC?
-====================
+## 2. INSTALLING FPSAC?
 
 FPSAC is composed of a set of Python scripts, located in the src
 directory, together with a master shell script, fpsac.sh. So there is
 no compilation required.
 
-FPSAC requires the following softwares to be available:
-makembindex (from the BLAST distribution 2.2.27+ and above)
-makeblastdb (from the BLAST distribution 2.2.27+ and above)
-blastn      (from the BLAST distribution 2.2.27+ and above)
+FPSAC requires the following softwares to be available:  
+makembindex (from the BLAST distribution 2.2.27+ and above)  
+makeblastdb (from the BLAST distribution 2.2.27+ and above)  
+blastn      (from the BLAST distribution 2.2.27+ and above)  
 muscle      (version v3.8.31 and above)
 
 FPSAC has been developed and tested on Unix (including Linux and
 MacOS) systems, using Python (http://www.python.org/) version 2.7.3,
 with the numpy library (http://numpy.scipy.org/).
 
-3. USING FPSAC.
-===============
+## 3. USING FPSAC.
 
-FPSAC takes as input 
+FPSAC takes as input   
 (1) ancient_contigs.fa: a FASTA file of ancient contigs (ancestral
-genome),
-(2) extant_genomes.fa: a FASTA file of extant genomes,
+genome),  
+(2) extant_genomes.fa: a FASTA file of extant genomes,  
 (3) species_tree: a species tree describing the relationship between
 the extant genomes and with a marked ancestral node indicating trhe
-position of the ancestor of interest,
+position of the ancestor of interest,  
 (4) three parameters s, l, c that will be described in section 4
-below.
-
-l is an integer
-s is an integer between 0 and 100
-c is an integer greater than 1
+below.  
+ 
+l is an integer  
+s is an integer between 0 and 100  
+c is an integer greater than 1  
 
 FPSAC can be run with the following line command:
 
 ./fpsac.sh output_directory_name species_tree ancient_contigs.fa extant_genomes.fa l s c ancestor_name
 
-Contraints on the input data are the following:
-- species names have to be the same in the extant genomes file and in the species tree
-- the species tree needs to be in simple nexus format with no comments and branch length
-- the species tree needs to be fully resolved but for the outgroups
-- the species names should not contain any of the symbols '.', ':', '-'
+Contraints on the input data are the following:  
+- species names have to be the same in the extant genomes file and in the species tree  
+- the species tree needs to be in simple nexus format with no comments and branch length  
+- the species tree needs to be fully resolved but for the outgroups  
+- the species names should not contain any of the symbols '.', ':', '-'  
 
-The results of running FPSAC as above are available in the directory
+The results of running FPSAC as above are available in the directory  
 DIR=output_directory_name/results_ancestor_name
-
-The important results files are the following:
-- output_directory_name/data			 
-  formatted data
-- $DIR/contigs/families_with_contig_names 
-  homologous families
-- $DIR/scaffold/scaffold_order
-  order of ancestral markers along the scaffolds
-- $DIR/scaffold/scaffold.fasta
-  scaffold sequence, with gaps filled by Ns
-- $DIR/finishing/ancestral_sequence.fasta
-  scaffold sequence with gaps filled by estimated sequences
-- $DIR/finishing/ancestral_sequence_map
-  map of the scaffold detailling the link between ancestral segments
-  and extant segments
-- output_directory_name/report_ancestor_name
-  report on the FPSAC run
+  
+The important results files are the following:  
+- output_directory_name/data			   
+  formatted data  
+- $DIR/contigs/families_with_contig_names   
+  homologous families  
+- $DIR/scaffold/scaffold_order  
+  order of ancestral markers along the scaffolds  
+- $DIR/scaffold/scaffold.fasta  
+  scaffold sequence, with gaps filled by Ns  
+- $DIR/finishing/ancestral_sequence.fasta  
+  scaffold sequence with gaps filled by estimated sequences  
+- $DIR/finishing/ancestral_sequence_map  
+  map of the scaffold detailling the link between ancestral segments  
+  and extant segments  
+- output_directory_name/report_ancestor_name  
+  report on the FPSAC run  
 
 Many other intermediate files are generated that are available in
 $DIR/contigs/, $DIR/scaffold/, $DIR/finishing/, as described in the
@@ -85,9 +82,8 @@ following section.
 An example is provided using the Black Deat agent data set, see
 directory black_death and file run_black_death.sh.
 
-4. FPSAC METHODOLOGY.
-=====================
-
+## 4. FPSAC METHODOLOGY.
+ 
 FPSAC relates to a generic scheme for reconstructing ancestral genomes
 organization and is composed of four phases:
 
@@ -126,9 +122,8 @@ organization and is composed of four phases:
   aligned into a multiple sequence alignment, that is used to
   reconstruct a putative ancestral gap sequence.
 
-4.1. Computing homologous markers families.  
--------------------------------------------
-
+### 4.1. Computing homologous markers families.  
+ 
 We map the ancient contigs onto the extant genomes using megablast
 with default parameters.  Every significant hit, defined here by a
 length of at least l nucleotides and a sequence identity above s%,
@@ -164,16 +159,16 @@ above c, the third parameter passed to the master script fpsac.sh.
 The files produced by this stage are in the directory $DIR/contigs and
 are the following:
 
-- megablast_hits: raw hits obtained with megablast
+- megablast_hits: raw hits obtained with megablast  
 - ancient_extant_hits: hits between ancient contigs and extant genomes
   the format of this file is the following: each line describes a hit
   extant_genome_name chromosome start end orientation(1/-1) contig_name start end orientation (1/-1)
 
 - families_ancestral_content: ancestral multiplicity of each
-  homologous family
+  homologous family  
 - families_profiles: extant profile (multiplicity) of each family
 
-- families.fasta: ancestral sequence associated to each family
+- families.fasta: ancestral sequence associated to each family  
 - families_length: length of the above sequences
 
 - families_with_contig_names: coordinates of the segments that define
@@ -187,9 +182,8 @@ are the following:
   undoubled marker extremity (for family I, the doubled markers are
   2*I-1 and 2*I)
 
-4.2. Scaffolding.
-------------------
-
+### 4.2. Scaffolding.
+ 
 All files obtained during the scaffolding stage are in $DIR/scaffold.
 
 Predicting ancestral adjacencies.  To account for the orientation of
@@ -210,10 +204,10 @@ the weighted adjacencies.
 
 The adjacencies are stored in the files
 
-- adjacencies: unweighted adjacencies
-- adjacencies_weighted: weighted adjacencies
+- adjacencies: unweighted adjacencies  
+- adjacencies_weighted: weighted adjacencies  
 
-The format of the adjacencies file is as follows:
+The format of the adjacencies file is as follows:  
 id|weight;species_containing_the_adjacency:marker1 marker2 list_of_coordinates_of_extant_gaps_between_marker1_and_marker2
 
 Circularization into ancestral scaffolds.  An ancestral scaffold is a
@@ -233,12 +227,12 @@ order of the markers into a set of linear and/or circular scaffolds
 that respects the copy number constraint given by the ancestral marker
 multiplicities. 
 
-The results of this stage are in the files
-- adjacencies_kept: adjacencies kept for thre scaffolding
-- adjacencies_discarded: adjacencies removed from the adjacency graph
+The results of this stage are in the files  
+- adjacencies_kept: adjacencies kept for thre scaffolding  
+- adjacencies_discarded: adjacencies removed from the adjacency graph  
 
 The maximum weight subset is computed using a maximum weight matching
-algorithm implemented in the NetworkX pythin library:
+algorithm implemented in the NetworkX python library:
 http://networkx.github.io/.
 
 However, there can be many markers orders compatible with the
@@ -253,13 +247,13 @@ compatible with the adjacencies selected during the previous step and
 containing markers of the cluster and satisfy the multiplicity
 constraints of the markers.
 
-Repeat spanning intervals (RSI)  are in the files
-- repeat_spanning_intervals: all RSI, unweighted
-- repeat_spanning_intervals_weighted: all RSI, weighted
-- repeat_spanning_intervals_kept: RSI kept for clearing ambiguities in the scaffolds
-- repeat_spanning_intervals_discarded: RSI discarded by the greedy heuristic
-The repeat clusters are stored in the file
-- repeat_clusters
+Repeat spanning intervals (RSI)  are in the files  
+- repeat_spanning_intervals: all RSI, unweighted  
+- repeat_spanning_intervals_weighted: all RSI, weighted  
+- repeat_spanning_intervals_kept: RSI kept for clearing ambiguities in the scaffolds  
+- repeat_spanning_intervals_discarded: RSI discarded by the greedy heuristic  
+The repeat clusters are stored in the file  
+- repeat_clusters  
 
 All adjacencies, repeat spanning intervals, repeat clusters are
 described with the doubled markers.
@@ -272,18 +266,17 @@ discarded, resulting in a more fragmented, but unambiguous, set of
 scaffolds.
 
 The resulting markers orders that define the backbone of the scaffolds
-are available in two files:
-- scaffold_order_doubled: orders defined on doubled markers
-- scaffold_order: orders on undoubled markers
+are available in two files:  
+- scaffold_order_doubled: orders defined on doubled markers  
+- scaffold_order: orders on undoubled markers  
 
 In the scaffold files, scaffolds are called CAR (for Contiguous
 Ancestral Region), and a CAR starting by _Q and ending by Q_ is a
 linear CAR, while a CAR starting by _C and ending by C_ is a circular
 CAR.
 
-4.3. Estimating inter-contig gaps lengths and sequences.
----------------------------------------------------------
-
+### 4.3. Estimating inter-contig gaps lengths and sequences.
+ 
 An ancestral gap in the ancestral marker ordering is the sequence
 located between two consecutive ancestral markers. For each ancestral
 gap, we consider the extant genomes in which the occurrences of the
@@ -298,48 +291,47 @@ minimum and maximum extant gaps length between the markers in the
 extant genomes.
 
 The ancestral gaps, together with their corresponding extant gaps
-coordinates are in the file
-- $DIR/scaffold/gaps_coordinates
-The same, but with the gap length interval are in the file
+coordinates are in the file  
+- $DIR/scaffold/gaps_coordinates  
+The same, but with the gap length interval are in the file  
 - $DIR/scaffold/gaps_coordinates_and_length
 
 Next, for each ancestral gap, we align all sequences of extant gaps
 whose length is in this interval into a multiple sequence alignment,
 obtained with the software muscle. 
 
-The sequences of the extant gaps are the files 
-- *fasta_extant in the directory $DIR/finishing/alignments
-The muscle alignments are in the files
+The sequences of the extant gaps are the files   
+- *fasta_extant in the directory $DIR/finishing/alignments  
+The muscle alignments are in the files  
 - *fasta_muscle in the directory $DIR/finishing/alignments
 
 A parsimonious estimation of each ancestral gap sequence is obtained
 from the corresponding alignment of extant gaps sequences using the
 classical Fitch algorithm. 
 
-The inferred ancestral sequences are in the files 
+The inferred ancestral sequences are in the files   
 - *fasta_ancestral in the directory $DIR/finishing/alignments
 
 Finally, we combine all sequences from contigs and gaps into a set of
-scaffolds sequences. There are two scaffold sequence files
+scaffolds sequences. There are two scaffold sequence files  
 - $DIR/scaffold/scaffold.fasta: gaps are filled by Ns (number chosen
-  as the midpoint of the gap length interval)
+  as the midpoint of the gap length interval)  
 - $DIR/finishing/ancestral_sequence.fasta: gaps replaced by the
   inferred sequences
 
 There is also a map of the ancetsral sequence, that describes the
 extant genome segments that support every ancetsral sequence segment,
-in the file
+in the file  
 - $DIR/finishing/ancestral_sequence_map
 
-4.4. Refining scaffolding with low support adjacencies.
--------------------------------------------------------
-
+### 4.4. Refining scaffolding with low support adjacencies.
+ 
 It is possible to refine the scaffolding by considering all pairs of
 markers located at scaffolds extremities and looking for support
 (however not under a Dollo criterion) in extant genomes for such
 potential adjacencies. This is done by default by FPSAC, and
-availmable in the file
-- $DIR/scaffold/adjacencies_CARS
+availmable in the file  
+- $DIR/scaffold/adjacencies_CARS  
 These adjacencies ar not weighted.
 
 Next, after inspection, if a subset of such CARs extremities
@@ -352,14 +344,14 @@ extremities were deemed reliable ands were recorded in the file
 black_death/final/results_Black_Death_Agent_8291/scaffold/adjacencies_CARS_chosen
 and then integrated to the previous scaffolding by the command
 
-./fpsac_extra_1.sh \
-   black_death/final \
-   black_death/final/results_Black_Death_Agent_8291/scaffold/adjacencies_CARS_chosen \
+./fpsac_extra_1.sh \  
+   black_death/final \  
+   black_death/final/results_Black_Death_Agent_8291/scaffold/adjacencies_CARS_chosen \  
    Black_Death_Agent_8291
 
 The resulting files, in the directories $DIR/scaffold and
-$DIR/finishing are all suffixed by "_CARS_combined". The joined
-scaffolds, in the file
+$DIR/finishing are all suffixed by "_CARS_combined". 
+The joined scaffolds, in the file
 $DIR/finishing/ancestral_sequence_CARS_combined.fasta are separated by
 a sequence of 50 Ns.
 
