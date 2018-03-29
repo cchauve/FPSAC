@@ -2,7 +2,7 @@
 ## June 2013. 
 ## Contact: Cedric Chauve (Dept. Mathematics, Simon Fraser University), cedric.chauve@sfu.ca
 
-##1. WHAT IS FPSAC?
+## 1. WHAT IS FPSAC?
 
 FPSAC is a suite of shell and python scripts used to scaffold ancient
 contigs, for an ancestral genome of interest, using a phylogenetic
